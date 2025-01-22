@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     // Leer token del header
     const token = req.header('x-token-data');
-
+    console.log(token, "token recibido auth")
     // Si no existe el token
     if(!token){
         return res.status(401).json({ msg: 'No hay token, acceso denegado.'});

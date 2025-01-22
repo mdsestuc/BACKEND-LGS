@@ -1,4 +1,5 @@
 const Usuario = require("../models/Usuario");
+//import Usuario from '../models/Usuario';
 const { validationResult } = require("express-validator");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
@@ -96,6 +97,7 @@ exports.usuariosEdit = async (req, res) => {
 exports.activeUser = async (req, res) => {
   console.log("ingresa a usuarioActive")
   console.log(req.body)
+
   const errores = validationResult(req);
   if (!errores.isEmpty()) {
       console.log(req.body)
@@ -149,15 +151,19 @@ exports.userdelete = async (req, res) => {
 };
 
 exports.autenticarUsuario = async (req, res) => {
-  console.log('ingresa01')
+  console.log(req.body, 'ingresa01')
+  let xy = await Usuario.find({});
+  console.log(xy, "usuarios")
   const errores = validationResult(req);
   if (!errores.isEmpty()) {
     return res.status(400).json({ errores: errores.array() });
   }
 
   const { email, password } = req.body;
-
+  console.log("pasa validacion")
   try {
+    let xy = await Usuario.find({});
+    console.log(xy, "usuarios01")
     let usuario = await Usuario.findOne({ email } , { _id: 1, nombre: 1, rol: 1, password: 1 });
 
     if (!usuario) {
